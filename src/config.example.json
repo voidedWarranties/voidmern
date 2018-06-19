@@ -1,0 +1,7 @@
+{
+    "discord_client_id": "",
+    "discord_client_secret": "",
+    "express_url": "http://localhost:3000",
+    "database_url": "mongodb://localhost/voidmern",
+    "session_secret": "asoiypwt3w7=ye8gdbjcovjibu78vyfile"
+}
