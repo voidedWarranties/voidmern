@@ -1,3 +1,19 @@
 {
-    "presets": ["es2015-node", "react"]
+    "presets": ["es2015-node", "react"],
+    "plugins": [
+        ["transform-imports", {
+            "@material-ui/core": {
+                "transform": "@material-ui/core/${member}",
+                "preventFullImport": true
+            },
+            "@material-ui/icons": {
+                "transform": "@material-ui/icons/${member}",
+                "preventFullImport": true
+            },
+            "react-router-dom": {
+                "transform": "react-router-dom/${member}",
+                "preventFullImport": true
+            }
+        }]
+    ]
 }

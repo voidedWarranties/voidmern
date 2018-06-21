@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+#navigation {
+    font-family: "Roboto", sans-serif;
+}
+
+.Flipcard-back {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+// These override the Flipcard.css to fix it
+.Flipcard {
+    width: fit-content;
+    width: -moz-fit-content; // Firefox
+    width: -webkit-fit-content; // Safari iOS
+}
+
+.Flipcard-front,
+.Flipcard-back {
+    backface-visibility: hidden;
+    transition: transform var(--flipcard-transition-duration, 0.33s) var(--flipcard-transition-easing-function, ease-in), opacity var(--flipcard-transition-duration, 0.33s) var(--flipcard-transition-easing-function, ease-in);
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+}
+
+.Flipcard-front {
+    z-index: 2;
+    transform: rotateY(0deg);
+    position: relative;
+}
+  
+.Flipcard-back {
+    transform: rotateY(-180deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+}

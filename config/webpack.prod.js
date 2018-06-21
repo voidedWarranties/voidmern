@@ -1,10 +1,30 @@
 import merge from "webpack-merge";
 import common from "./webpack.common";
 import path from "path";
+import UglifyJSPlugin from "uglifyjs-webpack-plugin";
+import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import CompressionPlugin from "compression-webpack-plugin";
 
 // Define some extra config options for production ONLY
 const prodClientConfig = {
-    mode: "production" // Set NODE_ENV to production
+    mode: "production", // Set NODE_ENV to production
+    devtool: "source-map",
+    plugins: [
+        new UglifyJSPlugin({
+            sourceMap: true,
+            uglifyOptions: {
+                output: {
+                    comments: false
+                }
+            }
+        }),
+        new HardSourceWebpackPlugin(),
+        new CompressionPlugin({
+            test: /\.js$/
+        })
+        // new BundleAnalyzerPlugin()
+    ]
 };
 
 // Define the config for the express server

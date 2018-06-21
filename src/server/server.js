@@ -1,4 +1,5 @@
 import express from "express";
+import expressStaticGzip from "express-static-gzip";
 import session from "express-session";
 import path from "path";
 
@@ -24,7 +25,21 @@ const store = new mongooseSession({ // Create a new Mongoose Session Store,
 });
 
 if(process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../client"))); // If in production mode (see webpack configs), serve the static files in the dist folder. Must run "npm run build" first.
+    app.get("*.html", (req, res, next) => {
+        req.url = `${req.url}.gz`;
+        res.set("Content-Encoding", "gzip");
+        res.set("Content-Type", "text/html");
+        next();
+    });
+    app.get("*.js", (req, res, next) => {
+        req.url = `${req.url}.gz`;
+        res.set("Content-Encoding", "gzip");
+        res.set("Content-Type", "text/javascript");
+        next();
+    });
+
+    app.use(express.static(path.join(__dirname, "../client")));
+    app.use(expressStaticGzip(path.join(__dirname, "../client")));
 }
 
 passport.use(new DiscordStrategy({ // Be able to use the passport-discord strategy to authenticate for Discord

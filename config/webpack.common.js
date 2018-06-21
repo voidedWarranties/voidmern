@@ -15,6 +15,29 @@ const clientConfig = {
                 use: {
                     loader: "babel-loader" // Use the loader babel-loader
                 }
+            },
+            {
+                test: /\.css$/, // Load css files from external libraries, or my own
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ]
+            },
+            {
+                test: /node_modules\/typeface-roboto\/files\/roboto-latin-(300|400|500)(italic)?\.(woff|woff2)$/,
+                loader: "null-loader"
+            },
+            {
+                test: /\.(woff|woff2)$/,
+                loader: "url-loader?limit=100000"
+            },
+            {
+                test: /\.scss$/, // Load scss files
+                use: [
+                    "style-loader", // Inject CSS to the DOM
+                    "css-loader", // Translate CSS to CommonJS
+                    "sass-loader" // Transpile SASS to CSS
+                ]
             }
         ]
     },

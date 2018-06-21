@@ -1,10 +1,12 @@
 import webpack from "webpack";
+import fs from "fs";
 
 import config from "../config/webpack.prod";
 
 const compiler = webpack(config); // Create a webpack compiler using the given config
 
 compiler.run((err, stats) => { // Run the compiler
-    console.log(err);
-    console.log(stats);
+    if(err) {
+        console.error(err);
+    }
 });

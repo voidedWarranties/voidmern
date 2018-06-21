@@ -3,6 +3,10 @@ import React, { Component } from "react";
 import Navigation from "./Navigation";
 
 class App extends Component { //  Create a component App based on react's base Component
+    constructor(props) {
+        super(props);
+    }
+
     render() { // Called by react to render the component, must return JSX
         return(
             <div>
