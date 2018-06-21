@@ -5,18 +5,11 @@ import axios from "axios";
 import styled from "styled-components";
 
 import { Button, ClickAwayListener, Avatar, AppBar, Toolbar, Grid } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Flipcard from "@kennethormandy/react-flipcard";
 import "@kennethormandy/react-flipcard/src/Flipcard.css";
 
 import "./Navigation.scss";
-
-const styles = theme => ({
-    button: {
-        margin: theme.spacing.unit
-    }
-});
 
 class Navigation extends Component { // Create a component Navigation based on react's base Component - Only class-based components can store state, not function-based components
     constructor(props) {
@@ -31,7 +24,7 @@ class Navigation extends Component { // Create a component Navigation based on r
         return (
             <div id="navigation">
                 <CssBaseline />
-                <AppBar style={{ padding: "16px" }} position="static">
+                <AppBar position="static">
                     <Toolbar>
                         {this.state.user ? (
                             <Flipcard flipped={ this.state.userFlipped }>
@@ -41,9 +34,9 @@ class Navigation extends Component { // Create a component Navigation based on r
                                         { this.state.user.username }<sup>#{ this.state.user.discriminator }</sup>
                                     </span>
                                 </div>
-                                <ClickAwayListener onClickAway={ this.handleClickAway.bind(this) } className="flip-content">
-                                    <div>
-                                        <Button component={ Link } to="/logout" target="_self" id="logout-link" style={ styles.button }>Logout</Button>
+                                <ClickAwayListener onClickAway={ this.handleClickAway.bind(this) }>
+                                    <div className="flip-content">
+                                        <Button component={ Link } to="/logout" target="_self" id="logout-link">Logout</Button>
                                     </div>
                                 </ClickAwayListener>
                             </Flipcard>
@@ -79,4 +72,4 @@ class Navigation extends Component { // Create a component Navigation based on r
     }
 }
 
-export default withStyles(styles)(Navigation);
+export default Navigation;

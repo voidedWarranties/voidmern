@@ -4,12 +4,19 @@
     font-family: "Roboto", sans-serif;
 }
 
-.Flipcard-back {
-    display: inline-block;
+// Ethan's fix to the button not being centered
+// Which took over an hour to make
+// Winning
+#logout-link {
+    height: 100%;
     justify-content: center;
-    text-align: center;
-    vertical-align: middle;
 }
+
+.flip-content {
+    height: 100%;
+    justify-content: center;
+}
+// Also I'm a noob
 
 // These override the Flipcard.css to fix it
 .Flipcard {
@@ -24,6 +31,11 @@
     transition: transform var(--flipcard-transition-duration, 0.33s) var(--flipcard-transition-easing-function, ease-in), opacity var(--flipcard-transition-duration, 0.33s) var(--flipcard-transition-easing-function, ease-in);
     transform-style: preserve-3d;
     transform: rotateY(0deg);
+
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .Flipcard-front {
