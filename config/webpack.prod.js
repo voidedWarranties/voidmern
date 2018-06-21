@@ -39,6 +39,6 @@ const serverConfig = {
     node: {
         __dirname: false // Provide default behavior for __dirname (will give value somewhere in the dist folder)
     }
-}
+};
 
 export default [ merge(common, prodClientConfig), serverConfig ]; // Merge the common client config with the production-specific config above and also add in the server config (arrays of configs are properly used by webpack when compiling)

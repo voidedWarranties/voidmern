@@ -45,7 +45,7 @@ if(process.env.NODE_ENV === "production") {
 passport.use(new DiscordStrategy({ // Be able to use the passport-discord strategy to authenticate for Discord
     clientID: config.discord_client_id, // Set the client ID,
     clientSecret: config.discord_client_secret, // And the secret, which you get from creating a new Discord app
-    callbackURL: process.env.NODE_ENV === "production" ? `${config.express_url}/login/callback` : `http://localhost:3001/login/callback`, // If we're in production mode, use the express URL in the config. Otherwise, use localhost:3001
+    callbackURL: process.env.NODE_ENV === "production" ? `${config.express_url}/login/callback` : "http://localhost:3001/login/callback", // If we're in production mode, use the express URL in the config. Otherwise, use localhost:3001
     scope: scopes // Use the scopes provided in an array
 }, (accessToken, refreshToken, profile, done) => {
     process.nextTick(() => {

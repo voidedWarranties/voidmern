@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import Navigation from "./Navigation";
 
@@ -16,5 +17,9 @@ class App extends Component { //  Create a component App based on react's base C
         );
     }
 }
+
+App.propTypes = {
+    children: PropTypes.element.isRequired
+};
 
 export default App;

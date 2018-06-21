@@ -10,11 +10,15 @@ const clientConfig = {
     module: {
         rules: [
             {
+                enforce: "pre",
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: "eslint-loader"
+            },
+            {
                 test: /\.jsx?$/, // Regex (REGular EXpression) that allows both .js and .jsx
                 exclude: /node_modules/, // Exclude node_modules from being loaded by babel
-                use: {
-                    loader: "babel-loader" // Use the loader babel-loader
-                }
+                loader: "babel-loader"
             },
             {
                 test: /\.css$/, // Load css files from external libraries, or my own
@@ -49,6 +53,6 @@ const clientConfig = {
             template: "./src/client/index.html" // Based on the template in this folder
         })
     ]
-}
+};
 
 export default clientConfig;
