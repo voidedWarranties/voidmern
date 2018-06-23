@@ -4,6 +4,37 @@
     font-family: "Roboto", sans-serif;
 }
 
+#title {
+    // BELOW: LOOKS STUPID, ACT LIKE THIS NEVER HAPPENED
+    // background-image: linear-gradient(-90deg, navy, darkblue, blue, mediumblue, dodgerblue, deepskyblue, cyan) !important;
+    // color: transparent;
+    // background-clip: text;
+    // -webkit-background-clip: text;
+
+    font-size: 36px;
+    vertical-align: middle;
+
+    padding-right: 24px;
+    border-right: 4px solid deepskyblue;
+    margin: 5px;
+}
+
+figure {
+    display: inline-block;
+}
+
+figcaption {
+    font-size: 12px;
+}
+
+.title-navlink {
+    text-decoration: none;
+}
+
+.title-navlink:visited {
+    color: white;
+}
+
 // Ethan's fix to the button not being centered
 // Which took over an hour to make
 // Winning

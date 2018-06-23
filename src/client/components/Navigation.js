@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import { Button, ClickAwayListener, Avatar, AppBar, Toolbar } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Flipcard from "@kennethormandy/react-flipcard";
 import "@kennethormandy/react-flipcard/src/Flipcard.css";
+
+import logo from "../dist/logo.png";
 
 import "./Navigation.scss";
 
@@ -24,11 +26,20 @@ class Navigation extends Component { // Create a component Navigation based on r
                 <CssBaseline />
                 <AppBar position="static">
                     <Toolbar>
+                        <NavLink to="/" class="title-navlink">
+                            <img src={ logo } style={{ width: "48px", height: "48px", margin: "4px", verticalAlign: "middle" }} />
+                            <figure id="title">
+                                <span>WRM</span>
+                                <figcaption>
+                                    Wonderland Report Manager
+                                </figcaption>
+                            </figure>
+                        </NavLink>
                         {this.state.user ? (
                             <Flipcard flipped={ this.state.userFlipped }>
                                 <div className="flip-content" onClick={ () => this.setState({ userFlipped: !this.state.userFlipped }) }>
                                     <span>
-                                        <Avatar src={"https://cdn.discordapp.com/avatars/" + this.state.user.id + "/" + this.state.user.avatar + ".png"} style={{ borderStyle: "solid", borderWidth: "2px", width: "32px", height: "32px", verticalAlign: "middle", display: "inline-block", margin: "8px" }} />
+                                        <Avatar src={ this.state.user.picture } style={{ borderStyle: "solid", borderWidth: "2px", width: "32px", height: "32px", verticalAlign: "middle", display: "inline-block", margin: "8px" }} />
                                         { this.state.user.username }<sup>#{ this.state.user.discriminator }</sup>
                                     </span>
                                 </div>
@@ -60,11 +71,13 @@ class Navigation extends Component { // Create a component Navigation based on r
         axios.get("/api/user") // Use axios to get the user from express
             .then(res => {
                 this.setState({
-                    user: res.data ? res.data : null // Store the data from the response inside the state, this is the only way to set state
+                    user: res.data // Store the data from the response inside the state, this is the only way to set state
                 });
             })
-            .catch(err => {
-                console.error(err); // Log any errors into the developer console, since this is code for the browser. This does not output to the terminal.
+            .catch(() => {
+                this.setState({
+                    user: null
+                });
             });
     }
 }

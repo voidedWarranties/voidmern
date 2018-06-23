@@ -3,7 +3,6 @@ import common from "./webpack.common";
 import path from "path";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import CompressionPlugin from "compression-webpack-plugin";
 
 // Define some extra config options for production ONLY

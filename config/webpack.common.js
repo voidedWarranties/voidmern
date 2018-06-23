@@ -1,5 +1,6 @@
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 
 const clientConfig = {
     entry: "./src/client/index.js", // The entry point to the client (the main file for the client)
@@ -11,12 +12,12 @@ const clientConfig = {
         rules: [
             {
                 enforce: "pre",
-                test: /\.jsx?$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 loader: "eslint-loader"
             },
             {
-                test: /\.jsx?$/, // Regex (REGular EXpression) that allows both .js and .jsx
+                test: /\.(js|jsx)$/, // Regex (REGular EXpression) that allows both .js and .jsx
                 exclude: /node_modules/, // Exclude node_modules from being loaded by babel
                 loader: "babel-loader"
             },
@@ -28,12 +29,11 @@ const clientConfig = {
                 ]
             },
             {
-                test: /node_modules\/typeface-roboto\/files\/roboto-latin-(300|400|500)(italic)?\.(woff|woff2)$/,
-                loader: "null-loader"
-            },
-            {
-                test: /\.(woff|woff2)$/,
-                loader: "url-loader?limit=100000"
+                test: /\.(png|jpg|gif|woff|woff2)$/,
+                loader: "url-loader",
+                options: {
+                    limit: 8192
+                }
             },
             {
                 test: /\.scss$/, // Load scss files
@@ -51,7 +51,8 @@ const clientConfig = {
     plugins: [
         new HtmlWebpackPlugin({ // Use webpack to create a HTML file,
             template: "./src/client/index.html" // Based on the template in this folder
-        })
+        }),
+        new FaviconsWebpackPlugin("./src/client/dist/logo.png")
     ]
 };
 

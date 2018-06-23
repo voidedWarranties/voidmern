@@ -1,5 +1,4 @@
 import webpack from "webpack";
-import fs from "fs";
 
 import config from "../config/webpack.prod";
 
