@@ -11,9 +11,7 @@ const options = {
     proxy: {
         "/api": "http://localhost:3000", // Proxy requests from WDS http://host:port/api/* to express
         "/login": "http://localhost:3000", // Proxy requests from WDS http://host:port/login/* to express
-        "/logout": "http://localhost:3000", // Proxy requests from WDS http://host:port/logout to express
-        "/authtest": "http://localhost:3000",
-        "/cookie": "http://localhost:3000"
+        "/logout": "http://localhost:3000" // Proxy requests from WDS http://host:port/logout to express
     }
 };
 

@@ -19,7 +19,7 @@ class App extends Component { //  Create a component App based on react's base C
 }
 
 App.propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired // Define that the prop children is required (children is the components inside this one)
 };
 
 export default App;

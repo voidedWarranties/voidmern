@@ -1,83 +1,75 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
-#navigation {
-    font-family: "Roboto", sans-serif;
+#navigation { // The main div
+    font-family: "Roboto", sans-serif; // Set the font to Roboto
 }
 
-#title {
+#title { // The WRM Text
     // BELOW: LOOKS STUPID, ACT LIKE THIS NEVER HAPPENED
     // background-image: linear-gradient(-90deg, navy, darkblue, blue, mediumblue, dodgerblue, deepskyblue, cyan) !important;
     // color: transparent;
     // background-clip: text;
     // -webkit-background-clip: text;
 
-    font-size: 36px;
-    vertical-align: middle;
+    font-size: 36px; // Set the font size to 36 pixels
+    vertical-align: middle; // Align the text vertically in the middle
 
-    padding-right: 24px;
-    border-right: 4px solid deepskyblue;
-    margin: 5px;
+    padding-right: 24px; // On the right, have a space before the border
+    border-right: 4px solid deepskyblue; // Have a deepskyblue 4px border in between this and the user card
+    margin: 5px; // Have a margin of 5px all around the text
 }
 
 figure {
-    display: inline-block;
+    display: inline-block; // Make the WRM text be inline like a span
 }
 
 figcaption {
-    font-size: 12px;
+    font-size: 12px; // Set the caption (Wonderland Report Manager) to be smaller
 }
 
 .title-navlink {
-    text-decoration: none;
+    text-decoration: none; // Remove the underline from the navlinks
 }
 
 .title-navlink:visited {
-    color: white;
+    color: white; // Remove the visited color from the navlinks
 }
 
 // Ethan's fix to the button not being centered
 // Which took over an hour to make
 // Winning
 #logout-link {
-    height: 100%;
-    justify-content: center;
+    height: 100%; // Expand the height
+    justify-content: center; // Center the button horizontally
 }
 
 .flip-content {
-    height: 100%;
-    justify-content: center;
+    height: 100%; // Expand the height
+    justify-content: center; // Center the div horizontally
 }
 // Also I'm a noob
 
 // These override the Flipcard.css to fix it
 .Flipcard {
-    width: fit-content;
+    width: fit-content; // Make the div shrink wrap to the content
     width: -moz-fit-content; // Firefox
     width: -webkit-fit-content; // Safari iOS
 }
 
 .Flipcard-front,
 .Flipcard-back {
-    backface-visibility: hidden;
-    transition: transform var(--flipcard-transition-duration, 0.33s) var(--flipcard-transition-easing-function, ease-in), opacity var(--flipcard-transition-duration, 0.33s) var(--flipcard-transition-easing-function, ease-in);
-    transform-style: preserve-3d;
-    transform: rotateY(0deg);
-
+    // Used to center the button
     height: 100%;
-    margin: 0;
     width: 100%;
     text-align: center;
 }
 
 .Flipcard-front {
-    z-index: 2;
-    transform: rotateY(0deg);
-    position: relative;
+    position: relative; // Set the position of this to relative so it can be positioned easier
 }
   
 .Flipcard-back {
-    transform: rotateY(-180deg);
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: absolute; // Set the position to absolute, so
+    top: 0; // It can be positioned at the top
+    left: 0; // left
 }

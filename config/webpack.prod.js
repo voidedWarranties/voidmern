@@ -8,18 +8,18 @@ import CompressionPlugin from "compression-webpack-plugin";
 // Define some extra config options for production ONLY
 const prodClientConfig = {
     mode: "production", // Set NODE_ENV to production
-    devtool: "source-map",
+    devtool: "source-map", // Allow webpack to create a file that maps bundled code to source code
     plugins: [
-        new UglifyJSPlugin({
-            sourceMap: true,
+        new UglifyJSPlugin({ // Make the JS ugly
+            sourceMap: true, // Use sourcemaps (devtools)
             uglifyOptions: {
                 output: {
-                    comments: false
+                    comments: false // Delete all the comments
                 }
             }
         }),
-        new HardSourceWebpackPlugin(),
-        new CompressionPlugin({
+        new HardSourceWebpackPlugin(), // Use HardSourceWebpackPlugin to speed up builds (supposedly)
+        new CompressionPlugin({ // Use CompressionPlugin to compress .js files to .js.gz files
             test: /\.js$/
         })
         // new BundleAnalyzerPlugin()

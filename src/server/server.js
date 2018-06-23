@@ -1,6 +1,5 @@
 import express from "express";
 import expressStaticGzip from "express-static-gzip";
-import session from "express-session";
 import path from "path";
 
 // Routes
@@ -13,7 +12,7 @@ import { Strategy as DiscordStrategy } from "passport-discord";
 import { Strategy as JWTStrategy } from "passport-jwt";
 import cookieParser from "cookie-parser";
 import User from "./database/models/User";
-import { init as dbInit, getConnection } from "./database/driver";
+import { init as dbInit } from "./database/driver";
 // import connectmongo from "connect-mongo";
 // const mongooseSession = connectmongo(session); // Be able to use connect-mongo by using "new mongooseSession"
 import config from "../config.json";
@@ -28,44 +27,38 @@ dbInit(); // Connect to the database
 //     mongooseConnection: getConnection() // Using the current Mongoose connection
 // });
 
-const cookieExtractor = (req) => {
-    var token = null;
-    if(req && req.cookies) {
-        token = req.cookies.discord_jwt;
+const cookieExtractor = (req) => { // Define a custom token extractor for passport-jwt to use
+    var token = null; // Set a variable token as null so if it is not set later we can check if it exists with if(token)
+    if(req && req.cookies) { // Check if the request exists and the request has cookies
+        token = req.cookies.discord_jwt; // Set token equal to the cookie named discord_jwt
     }
 
-    return token;
+    return token; // Return the token
 };
 
 const jwtOptions = {
-    jwtFromRequest: cookieExtractor,
-    secretOrKey: config.session_secret
+    jwtFromRequest: cookieExtractor, // Use the custom token extractor to get the token from the client
+    secretOrKey: config.session_secret // Set the secret for the token
 };
 
-if(process.env.NODE_ENV === "production") {
-    app.get("*.html", (req, res, next) => {
-        req.url = `${req.url}.gz`;
-        res.set("Content-Encoding", "gzip");
-        res.set("Content-Type", "text/html");
-        next();
-    });
-    app.get("*.js", (req, res, next) => {
-        req.url = `${req.url}.gz`;
-        res.set("Content-Encoding", "gzip");
-        res.set("Content-Type", "text/javascript");
-        next();
+if(process.env.NODE_ENV === "production") { // Only if the application is in production mode (npm run build, npm run serve, webpack.prod.js)
+    app.get("*.js", (req, res, next) => { // Define a middleware for all requests to js files
+        req.url = `${req.url}.gz`; // Which "redirects" the request to the same file but with a .gz
+        res.set("Content-Encoding", "gzip"); // Set the appropriate headers so the client can decode the gz
+        res.set("Content-Type", "text/javascript"); // And know what kind of file it should be
+        next(); // The middleware is finished, continue to the next route/middleware
     });
 
-    app.use(express.static(path.join(__dirname, "../client")));
-    app.use(expressStaticGzip(path.join(__dirname, "../client")));
+    app.use(express.static(path.join(__dirname, "../client"))); // Serve files in the dist/client folder as static files
+    app.use(expressStaticGzip(path.join(__dirname, "../client"))); // Serve gzipped files in the dist/client folder as static files
 }
 
-passport.use(new JWTStrategy(jwtOptions, async (payload, done) => {
-    const user = await User.findOne({ discordID: payload.sub });
-    if(user.loggedIn) {
-        return done(null, user, payload);
+passport.use(new JWTStrategy(jwtOptions, async (payload, done) => { // Use the JWT strategy to authenticate some pages using the token extractor above
+    const user = await User.findOne({ discordID: payload.sub }); // Find the user from the database using the payload of the token (the id)
+    if(user.loggedIn) { // If the database says the user is logged in,
+        return done(null, user, payload); // Let the user through
     }
-    return done();
+    return done(); // Otherwise, get a 401 Unauthorized error
 }));
 
 passport.use(new DiscordStrategy({ // Be able to use the passport-discord strategy to authenticate for Discord
@@ -74,17 +67,17 @@ passport.use(new DiscordStrategy({ // Be able to use the passport-discord strate
     callbackURL: process.env.NODE_ENV === "production" ? `${config.express_url}/login/callback` : "http://localhost:3001/login/callback", // If we're in production mode, use the express URL in the config. Otherwise, use localhost:3001
     scope: scopes // Use the scopes provided in an array
 }, async (accessToken, refreshToken, user, done) => {
-    if(user) {
-        const userDb = await User.findOne({ discordID: user.id });
-        if(userDb) {
-            User.findOneAndUpdate({ discordID: user.id }, {
-                loggedIn: true
+    if(user) { // If the user exists
+        const userDb = await User.findOne({ discordID: user.id }); // Try to find the user from the database using its id
+        if(userDb) { // If that entry exists
+            User.findOneAndUpdate({ discordID: user.id }, { // Update it
+                loggedIn: true // And say it is logged in
             }, (err, user) => {
 
             });
-            return done(null, user);
-        } else {
-            User.create({
+            return done(null, user); // and finish
+        } else { // Otherwise
+            User.create({ // Create a new user and store its info
                 email: user.email,
                 picture: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
                 discordID: user.id,
@@ -92,47 +85,16 @@ passport.use(new DiscordStrategy({ // Be able to use the passport-discord strate
                 discriminator: user.discriminator,
                 loggedIn: true
             });
-            return done(null, user);
+            return done(null, user); // and finish
         }
     }
 }));
 
-// app.use(session({ // Set the session middleware
-//     // name: "voidmern", // Set the name of the cookie to voidmern
-//     secret: config.session_secret, // Set a suuuper secret session key
-//     // resave: false, // Don't force the session to be saved over and over
-//     // saveUninitialized: false, // Save new, but not initialized, sessions to the store
-//     // store, // Use the session store made earlier
-//     // cookie: {
-//     //     maxAge: 1209600000, // Set the cookie to expire after 14 days
-//     //     sameSite: true // Set sameSite rules to strict
-//     // }
-// }));
-
-// passport.serializeUser((user, done) => {
-//     done(null, user); // Save the user into the store
-// });
-
-// passport.deserializeUser((id, done) => {
-//     done(null, id); // Attach user to req.user
-// });
-
 app.use(passport.initialize()); // Use middleware to initialize passport
-// app.use(passport.session()); // Change req.user to the deserialized user
 
 // Use the routes
 app.use("/login", login);
 app.use("/logout", logout);
 app.use("/api", api);
-
-app.get("/test", (req, res) => res.send(req.cookies));
-
-app.get("/authtest", passport.authenticate("jwt", { session: false }), (req, res) => {
-    res.send(`User Found: ${JSON.stringify(req.user)}`);
-});
-
-app.get("/cookie", (req, res) => {
-    res.cookie("test", "test").send("cookies!");
-});
 
 app.listen(3000, () => console.log("express app started")); // Start the express server

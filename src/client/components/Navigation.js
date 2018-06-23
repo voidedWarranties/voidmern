@@ -15,22 +15,22 @@ class Navigation extends Component { // Create a component Navigation based on r
     constructor(props) {
         super(props);
         this.state = { 
-            user: {},
-            userFlipped: false
+            user: {}, // Empty user by defualt
+            userFlipped: false // The user "card" is unflipped by default
         }; // Set the default state for this component
     }
 
     render() { // Called by react to render the component, must return JSX
         return (
             <div id="navigation">
-                <CssBaseline />
-                <AppBar position="static">
-                    <Toolbar>
-                        <NavLink to="/" class="title-navlink">
-                            <img src={ logo } style={{ width: "48px", height: "48px", margin: "4px", verticalAlign: "middle" }} />
-                            <figure id="title">
+                <CssBaseline /> {/* Use the baseline CSS from material-ui */}
+                <AppBar position="static"> {/* Create a MUI app bar */}
+                    <Toolbar> {/* Create a MUI toolbar inside the app bar */}
+                        <NavLink to="/" class="title-navlink"> {/* Create a navlink */}
+                            <img src={ logo } style={{ width: "48px", height: "48px", margin: "4px", verticalAlign: "middle" }} /> {/* Which has the WRM "logo" in it */}
+                            <figure id="title"> {/* Use a trick with figures */}
                                 <span>WRM</span>
-                                <figcaption>
+                                <figcaption> {/* To have this text under the main "WRM" text */}
                                     Wonderland Report Manager
                                 </figcaption>
                             </figure>
@@ -56,13 +56,14 @@ class Navigation extends Component { // Create a component Navigation based on r
                     </Toolbar>
                 </AppBar>
             </div>
-        );
+        ); // AFTER THE NAVLINK: The Flipcard is a custom element which has 2 sides, in this case, the div and the ClickAwayListener (disappears in the page, so it is the div under that)
+        // When front side is clicked, it flips the card over, and when you click out of that (ClickAwayListener), the card flips back
     }
 
-    handleClickAway() {
-        if(this.state.userFlipped) {
+    handleClickAway() { // Called when the user clicks away from a certain area. See, ClickAwayListener
+        if(this.state.userFlipped) { // If the user card is already flipped,
             this.setState({
-                userFlipped: false
+                userFlipped: false // Unflip it
             });
         }
     }
@@ -74,9 +75,9 @@ class Navigation extends Component { // Create a component Navigation based on r
                     user: res.data // Store the data from the response inside the state, this is the only way to set state
                 });
             })
-            .catch(() => {
+            .catch(() => { // If we get a 401 / other error
                 this.setState({
-                    user: null
+                    user: null // Set no user
                 });
             });
     }

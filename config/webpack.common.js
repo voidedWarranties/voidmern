@@ -11,28 +11,28 @@ const clientConfig = {
     module: {
         rules: [
             {
-                enforce: "pre",
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                loader: "eslint-loader"
+                enforce: "pre", // Make sure this loader comes first
+                test: /\.(js|jsx)$/, // Allow .js and .jsx extensions
+                exclude: /node_modules/, // Exclude the node_modules folder
+                loader: "eslint-loader" // Use the eslint-loader to detect settings from the .eslintrc.json and produce errors for non-standard code
             },
             {
                 test: /\.(js|jsx)$/, // Regex (REGular EXpression) that allows both .js and .jsx
                 exclude: /node_modules/, // Exclude node_modules from being loaded by babel
-                loader: "babel-loader"
+                loader: "babel-loader" // Use the babel-loader to convert files from es6(+) to commonjs (es5)
             },
             {
                 test: /\.css$/, // Load css files from external libraries, or my own
                 use: [
-                    "style-loader",
-                    "css-loader"
+                    "style-loader", // Inject CSS into the DOM
+                    "css-loader" // Translate CSS to CommonJS
                 ]
             },
             {
-                test: /\.(png|jpg|gif|woff|woff2)$/,
-                loader: "url-loader",
+                test: /\.(png|jpg|gif|woff|woff2)$/, // Allow .png, .jpg, .gif, .woff, and .woff2 extensions to be loaded
+                loader: "url-loader", // Use url-loader to load files similarly to file-loader
                 options: {
-                    limit: 8192
+                    limit: 8192 // Define a byte limit. If passed, the loader will instead use a DataURL.
                 }
             },
             {
