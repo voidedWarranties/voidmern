@@ -13,8 +13,6 @@ import { Strategy as JWTStrategy } from "passport-jwt";
 import cookieParser from "cookie-parser";
 import User from "./database/models/User";
 import { init as dbInit } from "./database/driver";
-// import connectmongo from "connect-mongo";
-// const mongooseSession = connectmongo(session); // Be able to use connect-mongo by using "new mongooseSession"
 import config from "../config.json";
 const scopes = ["identify", "email", "guilds"];
 
@@ -22,10 +20,6 @@ const app = express(); // Create the express app
 app.use(cookieParser());
 
 dbInit(); // Connect to the database
-
-// const store = new mongooseSession({ // Create a new Mongoose Session Store,
-//     mongooseConnection: getConnection() // Using the current Mongoose connection
-// });
 
 const cookieExtractor = (req) => { // Define a custom token extractor for passport-jwt to use
     var token = null; // Set a variable token as null so if it is not set later we can check if it exists with if(token)
