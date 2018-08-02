@@ -10,7 +10,7 @@ class Home extends Component {
         return(
             <div id="home">
                 <CssBaseline />
-                <h1>WRM by voided - inspired by Alice’s Wonderland</h1>
+                <h1>Something or other</h1>
             </div>
         );
     }

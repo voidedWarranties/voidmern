@@ -1,7 +1,8 @@
 {
     "discord_client_id": "",
     "discord_client_secret": "",
+    "kakao_client_id": "",
     "express_url": "http://localhost:3000",
-    "database_url": "mongodb://localhost/voidmern",
+    "database_url": "mongodb://localhost:27017/voidmern",
     "session_secret": "asoiypwt3w7=ye8gdbjcovjibu78vyfile"
 }
